@@ -6,6 +6,7 @@ import { ToDoList } from 'components/ToDoList';
 import { TodoEditor } from 'components/TodoEditor/TodoEditor';
 import { Filter } from 'components/Filter/Filter';
 import { Form } from 'components/Form/Form';
+import { LoginForm } from 'components/LoginForm/LoginForm';
 import shortid from 'shortid';
 
 const colorPickerOptions = [
@@ -96,8 +97,8 @@ export class App extends Component {
     return (
       <>
         <h1>Состояние компонента</h1>
+        <LoginForm />
         <Form onSubmit={this.formSubmitHandler} />
-
         <Counter initialValue={10} />
         <DropDown />
         <ColorPicker options={colorPickerOptions} />
