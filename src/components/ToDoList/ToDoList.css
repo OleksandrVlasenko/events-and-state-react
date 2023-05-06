@@ -1,0 +1,21 @@
+.ToDoList {
+}
+
+.ToDoList__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ToDoList__text {
+  margin-right: 10px;
+}
+
+.ToDoList__button {
+  height: 20px;
+}
+
+.container {
+  display: block;
+  padding: 10px;
+}
