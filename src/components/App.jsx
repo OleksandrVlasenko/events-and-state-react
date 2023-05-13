@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
-import { Counter } from 'components/Counter/Counter';
-import { DropDown } from 'components/DropDown/DropDown';
-import { ColorPicker } from 'components/ColorPicker/ColorPicker';
+// import { Counter } from 'components/Counter/Counter';
+// import { DropDown } from 'components/DropDown/DropDown';
+// import { ColorPicker } from 'components/ColorPicker/ColorPicker';
 import { ToDoList } from 'components/ToDoList';
 import { TodoEditor } from 'components/TodoEditor/TodoEditor';
 import { Filter } from 'components/Filter/Filter';
-import { Form } from 'components/Form/Form';
-import { LoginForm } from 'components/LoginForm/LoginForm';
+import { Modal } from 'components/Modal/Modal';
+// import { Form } from 'components/Form/Form';
+// import { LoginForm } from 'components/LoginForm/LoginForm';
 import shortid from 'shortid';
 
-const colorPickerOptions = [
-  { label: 'red', color: 'red' },
-  { label: 'green', color: 'green' },
-  { label: 'blue', color: 'blue' },
-  { label: 'grey', color: 'grey' },
-  { label: 'yellow', color: 'yellow' },
-  { label: 'indigo', color: 'indigo' },
-];
+// const colorPickerOptions = [
+//   { label: 'red', color: 'red' },
+//   { label: 'green', color: 'green' },
+//   { label: 'blue', color: 'blue' },
+//   { label: 'grey', color: 'grey' },
+//   { label: 'yellow', color: 'yellow' },
+//   { label: 'indigo', color: 'indigo' },
+// ];
 
 export class App extends Component {
   state = {
@@ -27,6 +28,13 @@ export class App extends Component {
       { id: 'id-4', text: 'Todo 4', complited: false },
     ],
     filter: '',
+    showModal: false,
+  };
+
+  toogleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
   };
 
   deleteToDo = todoId => {
@@ -40,8 +48,6 @@ export class App extends Component {
   };
 
   toogleComplited = todoId => {
-    console.log(todoId);
-
     this.setState(prevState => ({
       todos: prevState.todos.map(todo => {
         if (todo.id === todoId) {
@@ -84,8 +90,33 @@ export class App extends Component {
     );
   };
 
+  componentDidMount() {
+    console.log('After render');
+
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    console.log('App  componentDidMount  todos:', todos);
+
+    if (todos) {
+      this.setState({ todos });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('App  componentDidUpdate  prevState:', prevState);
+    console.log('State', this.state);
+    console.log('App  componentDidUpdate  prevProps:', prevProps);
+    console.log('After update');
+
+    if (this.state.todos !== prevState.todos) {
+      console.log('State is updated');
+
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+  }
+
   render() {
-    const { todos, filter } = this.state;
+    console.log('Rrender');
+    const { todos, filter, showModal } = this.state;
     const todoCount = todos.length;
     const todoComplited = todos.reduce(
       (acc, todo) => (todo.complited ? acc + 1 : acc),
@@ -97,11 +128,14 @@ export class App extends Component {
     return (
       <>
         <h1>Состояние компонента</h1>
-        <LoginForm />
-        <Form onSubmit={this.formSubmitHandler} />
-        <Counter initialValue={10} />
-        <DropDown />
-        <ColorPicker options={colorPickerOptions} />
+        <button type="button" onClick={this.toogleModal}>
+          Open modal
+        </button>
+        {/* <LoginForm /> */}
+        {/* <Form onSubmit={this.formSubmitHandler} /> */}
+        {/* <Counter initialValue={10} /> */}
+        {/* <DropDown /> */}
+        {/* <ColorPicker options={colorPickerOptions} /> */}
         <TodoEditor onSubmit={this.addTodo} />
         <Filter value={filter} onChange={this.changeFilter} />
         <div>
@@ -113,6 +147,18 @@ export class App extends Component {
           onDeleteTodo={this.deleteToDo}
           onToogleComplited={this.toogleComplited}
         />
+        {showModal && (
+          <Modal onClose={this.toogleModal}>
+            <h2>Modal</h2>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis,
+              eligendi.
+            </p>
+            {/* <button type="button" onClick={this.toogleModal}>
+              Close modal
+            </button> */}
+          </Modal>
+        )}
       </>
     );
   }
