@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-// import { Counter } from 'components/Counter/Counter';
-// import { DropDown } from 'components/DropDown/DropDown';
-// import { ColorPicker } from 'components/ColorPicker/ColorPicker';
+import { Counter } from 'components/Counter/Counter';
+import { DropDown } from 'components/DropDown/DropDown';
+import { ColorPicker } from 'components/ColorPicker/ColorPicker';
 import { ToDoList } from 'components/ToDoList';
 import { TodoEditor } from 'components/TodoEditor/TodoEditor';
 import { Filter } from 'components/Filter/Filter';
 import { Modal } from 'components/Modal/Modal';
-// import { Form } from 'components/Form/Form';
-// import { LoginForm } from 'components/LoginForm/LoginForm';
+import { Form } from 'components/Form/Form';
+import { LoginForm } from 'components/LoginForm/LoginForm';
 import shortid from 'shortid';
 
-// const colorPickerOptions = [
-//   { label: 'red', color: 'red' },
-//   { label: 'green', color: 'green' },
-//   { label: 'blue', color: 'blue' },
-//   { label: 'grey', color: 'grey' },
-//   { label: 'yellow', color: 'yellow' },
-//   { label: 'indigo', color: 'indigo' },
-// ];
+const colorPickerOptions = [
+  { label: 'red', color: 'red' },
+  { label: 'green', color: 'green' },
+  { label: 'blue', color: 'blue' },
+  { label: 'grey', color: 'grey' },
+  { label: 'yellow', color: 'yellow' },
+  { label: 'indigo', color: 'indigo' },
+];
 
 export class App extends Component {
   state = {
@@ -131,11 +131,11 @@ export class App extends Component {
         <button type="button" onClick={this.toogleModal}>
           Open modal
         </button>
-        {/* <LoginForm /> */}
-        {/* <Form onSubmit={this.formSubmitHandler} /> */}
-        {/* <Counter initialValue={10} /> */}
-        {/* <DropDown /> */}
-        {/* <ColorPicker options={colorPickerOptions} /> */}
+        <LoginForm />
+        <Form onSubmit={this.formSubmitHandler} />
+        <Counter initialValue={10} />
+        <DropDown />
+        <ColorPicker options={colorPickerOptions} />
         <TodoEditor onSubmit={this.addTodo} />
         <Filter value={filter} onChange={this.changeFilter} />
         <div>
